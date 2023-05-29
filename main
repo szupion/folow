@@ -1,0 +1,26 @@
+import tweepy
+
+# Учетные данные доступа к API Twitter
+consumer_key = 'your_consumer_key'
+consumer_secret = 'your_consumer_secret'
+access_token = 'your_access_token'
+access_token_secret = 'your_access_token_secret'
+
+# Устанавливаем соединение с API Twitter
+auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+auth.set_access_token(access_token, access_token_secret)
+api = tweepy.API(auth)
+
+# Имя пользователя, на которого мы хотим подписаться
+target_username = 'target_username'
+
+try:
+    # Получаем информацию о целевом пользователе
+    user = api.get_user(screen_name=target_username)
+    
+    # Подписываемся на целевого пользователя
+    api.create_friendship(user.id)
+    
+    print(f"Вы успешно подписались на {target_username}!")
+except tweepy.TweepError as e:
+    print(f"Ошибка: {e.reason}")
